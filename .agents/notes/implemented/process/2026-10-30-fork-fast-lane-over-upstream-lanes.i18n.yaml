@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for 2026-10-30-fork-fast-lane-over-upstream-lanes.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-10-30-fork-fast-lane-over-upstream-lanes.md
+/agent-note-fork-fast-lane-over-upstream-pr-lanes:
+  en: 1c0e9609ea5fdf86
+  zh: 255b8eabacea3357
+/agent-note-fork-fast-lane-over-upstream-pr-lanes/problem:
+  en: d66d472fa141d492
+  zh: fbfcd8ea2ea9c5ec
+/agent-note-fork-fast-lane-over-upstream-pr-lanes/decision:
+  en: 368287f138a0a0c9
+  zh: 1d61a64f53261068
+/agent-note-fork-fast-lane-over-upstream-pr-lanes/guard-spec-coupling:
+  en: cfeb9fb32999d830
+  zh: 43ed88e7b3dbe353
+/agent-note-fork-fast-lane-over-upstream-pr-lanes/alternatives-considered:
+  en: 0a3a717e5e8d2cf6
+  zh: e43e777b836c2f3a
+/agent-note-fork-fast-lane-over-upstream-pr-lanes/consequences:
+  en: b71657a211d6b7f0
+  zh: 0301e9912d497115
+/agent-note-fork-fast-lane-over-upstream-pr-lanes/testing:
+  en: 445a6f0dff4849bf
+  zh: 04fb330a490989b2
