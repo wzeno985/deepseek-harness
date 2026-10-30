@@ -269,8 +269,11 @@ jobs:
 
   node-24-bench:
     if: github.event_name == 'pull_request'
-    # Fork-only: the shared hosted pool runs a few percent slower than the
-    # pool these budgets were calibrated on, so the lane stays advisory.
+    # Fork-only advisory: the shared hosted pool runs a few percent slower than
+    # the pool these budgets were calibrated on, so measured medians cross the
+    # tightest wall-clock budgets (82-87ms against 80ms, 30.8ms against 30ms).
+    # Re-budgeting is not the fork-side option: budgets must stay reviewed
+    # source constants and environment variables may not override them.
     continue-on-error: true
     runs-on: >-
       ${{ vars.DSH_CI_FAILOVER_LINUX == 'blacksmith' && 'blacksmith-4vcpu-ubuntu-2404'
