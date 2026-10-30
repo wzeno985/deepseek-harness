@@ -19,6 +19,8 @@ Status: implemented
 - **Advisory 基准。** `node-24-bench` 在本 fork 上带 `continue-on-error: true`。共享托管池上的实测中位数超过最紧的预算:`conversation-fold/streaming-reasoning-leading-whitespace-16384` 为 82.55 毫秒与 87.48 毫秒,预算 80 毫秒;4096 用例为 30.82 毫秒,预算 30 毫秒。
 - **仓库级禁用。** workflow 的启用状态是仓库元数据,不是文件内容。保持启用:`fork-fast-checks` 与 `pr-check-on-base-branch`(后者各 job 由变量门控,报为 skipped)。禁用:`ci`、`ci-windows`、`ci-python`、`e2e`、`ci-master`、`sandbox`、`build-preview-cloudflare`、`issue-lifecycle`、`issue-policy`、`weighted-approval`、`weighted-approval-review-event`、`pr-check-after-approve`、`pr-check-on-head-branch`、`release`、`release-vendor`。
 
+该状态会在没有提交的情况下漂移:在网页界面启用某个 workflow,或在默认分支上修改某个 workflow 文件,都会恢复已禁用的 workflow。快速 lane 才是本意信号,所以当某个拉取请求开始跑超出预期的重 lane 时,需要重新核对启用清单,而不是给 workflow 写新代码。
+
 ## 守护 spec 的耦合
 
 `scripts/ci-workflow.spec.ts` 钉住了本决策所改动的属性:Linux 与 Windows lane 的兜底标签,以及 `node-24-bench` 不是 advisory 这一点。因此本 fork 的断言只在这些位置与上游不同,且每处都在文件内说明了原因。

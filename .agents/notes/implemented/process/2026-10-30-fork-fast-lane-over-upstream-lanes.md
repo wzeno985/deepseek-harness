@@ -19,6 +19,8 @@ Four parts: hosted fallbacks, one fast lane, an advisory benchmark lane, and rep
 - **Advisory benchmark.** `node-24-bench` carries `continue-on-error: true` on the fork. Measured medians on the shared hosted pool exceed the tightest budgets: 82.55 ms and 87.48 ms against an 80 ms budget for `conversation-fold/streaming-reasoning-leading-whitespace-16384`, and 30.82 ms against 30 ms for the 4096 case.
 - **Repository-level disablement.** Workflow enablement is repository metadata, not file content. Enabled: `fork-fast-checks` and `pr-check-on-base-branch`, whose jobs are variable-gated and report as skipped. Disabled: `ci`, `ci-windows`, `ci-python`, `e2e`, `ci-master`, `sandbox`, `build-preview-cloudflare`, `issue-lifecycle`, `issue-policy`, `weighted-approval`, `weighted-approval-review-event`, `pr-check-after-approve`, `pr-check-on-head-branch`, `release`, and `release-vendor`.
 
+That state drifts without a commit: enabling a workflow in the web interface, or changing a workflow file on the default branch, restores a disabled workflow. The fast lane is the intended signal, so a pull request that starts heavier lanes than expected means the enabled list needs re-checking rather than the workflow needing new code.
+
 ## Guard-spec coupling
 
 `scripts/ci-workflow.spec.ts` pins the properties this decision changes: the fallback labels of the Linux and Windows lanes, and that `node-24-bench` is not advisory. The fork's expectations therefore differ from upstream in exactly those assertions, and the file states why at each one.
