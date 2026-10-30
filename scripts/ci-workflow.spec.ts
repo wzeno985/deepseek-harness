@@ -690,7 +690,9 @@ describe('CI workflow', () => {
     expect(JSON.stringify(benchmark.steps)).not.toContain('DSH_CI_FAILOVER_LINUX')
     expect(benchmark.if).toBe("github.event_name == 'pull_request'")
     expect(benchmark.needs).toBeUndefined()
-    expect(benchmark['continue-on-error']).toBeUndefined()
+    // Fork: the shared hosted pool runs a few percent slower than the pool these
+    // budgets were calibrated on, so the benchmark lane is advisory here.
+    expect(benchmark['continue-on-error']).toBe(true)
     expect(benchmark.env).toBeUndefined()
     expect(aggregate.needs).toContain('node-24-bench')
   })

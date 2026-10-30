@@ -1,7 +1,13 @@
 name: Fork fast checks
 
 # Fork-only fast signal: the static gate set on a standard hosted runner.
-# The upstream lanes in ci.yml stay available by re-enabling that workflow.
+#
+# The upstream lanes in ci.yml run the full inventory (coverage, snapshots,
+# benchmarks, Windows, Python) and stay available by re-enabling that workflow.
+# Trimming jobs inside ci.yml is not the alternative here: ci-workflow.spec.ts
+# pins node-24-bench's `if` and every lane's fallback label, so cutting a job
+# rewrites the guard spec and hides that the upstream lanes still run as
+# written. A separate workflow keeps both facts true.
 on:
   pull_request:
 
@@ -65,3 +71,11 @@ jobs:
         env:
           DSH_ARCHIVE_BASE_REF: ${{ github.event.pull_request.base.sha }}
         run: pnpm run check:ci:static
+
+      # The static gate set is a list of verifier scripts, so a workflow or
+      # guard-spec regression only surfaces in the unit lane — the lane this fork
+      # does not run. ci-workflow.spec.ts pins exactly those invariants and takes
+      # under a second, so the fast lane runs it directly instead of the whole
+      # scripts/ suite (whose parallel load is unrelated to this check).
+      - name: Run workflow guard spec
+        run: pnpm exec vitest run scripts/ci-workflow.spec.ts
