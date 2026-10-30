@@ -24,6 +24,12 @@ pre-commit:
     - name: whitespace (staged)
       run: git diff --cached --check
 
+    # This fork is public and the repository has no other secret gate (see the
+    # fork secret gate Agent Note). The scan reads the index, so it judges what
+    # the commit would contain.
+    - name: secret shapes (staged)
+      run: scripts/check-staged-secrets.sh
+
     - name: pi-ai provider metadata
       glob: '{pnpm-lock.yaml,packages/llm/llm-pi-ai/package.json,packages/llm/llm-pi-ai/scripts/gen-provider-data.ts,packages/llm/llm-pi-ai/src/provider-data.generated.ts}'
       run: node_modules/.bin/tsx packages/llm/llm-pi-ai/scripts/gen-provider-data.ts --check --cached
