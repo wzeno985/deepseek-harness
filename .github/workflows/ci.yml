@@ -269,6 +269,9 @@ jobs:
 
   node-24-bench:
     if: github.event_name == 'pull_request'
+    # Fork-only: the shared hosted pool runs a few percent slower than the
+    # pool these budgets were calibrated on, so the lane stays advisory.
+    continue-on-error: true
     runs-on: >-
       ${{ vars.DSH_CI_FAILOVER_LINUX == 'blacksmith' && 'blacksmith-4vcpu-ubuntu-2404'
           || 'ubuntu-24.04' }}
